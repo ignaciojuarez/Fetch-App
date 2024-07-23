@@ -7,18 +7,39 @@
 
 import SwiftUI
 
+// TODO:
+// - LazyLoading
+// - favorites
+// - animations
+// - better design
+// - images
+
+// DONE:
+// - async fetching
+// - search
+
 struct ContentView: View {
+    @EnvironmentObject var viewModel: ViewModel
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationView {
+            List(viewModel.filteredMeals, id: \.idMeal) { meal in
+                NavigationLink(destination: MealDetailView(mealID: meal.idMeal)) {
+                    Text(meal.strMeal)
+                }
+                
+            }
+            .navigationTitle("Desserts")
+            .searchable(text: $viewModel.searchText, prompt: "Search desserts")
+            .onAppear {
+                Task { await viewModel.loadMeals() }
+            }
         }
-        .padding()
     }
 }
 
+
 #Preview {
     ContentView()
+        .environmentObject(ViewModel())
 }

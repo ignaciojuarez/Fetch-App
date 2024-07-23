@@ -7,18 +7,26 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4F034A422C4F3A4D0009E02A /* Fetch_AppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F034A412C4F3A4D0009E02A /* Fetch_AppApp.swift */; };
+		4F034A422C4F3A4D0009E02A /* FetchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F034A412C4F3A4D0009E02A /* FetchApp.swift */; };
 		4F034A442C4F3A4D0009E02A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F034A432C4F3A4D0009E02A /* ContentView.swift */; };
 		4F034A462C4F3A4E0009E02A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F034A452C4F3A4E0009E02A /* Assets.xcassets */; };
 		4F034A492C4F3A4E0009E02A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F034A482C4F3A4E0009E02A /* Preview Assets.xcassets */; };
+		4F034A512C4F3A950009E02A /* Meal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F034A502C4F3A950009E02A /* Meal.swift */; };
+		4F034A542C4F3C650009E02A /* DataFetcherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F034A532C4F3C650009E02A /* DataFetcherService.swift */; };
+		4F034A562C4F3EC50009E02A /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F034A552C4F3EC50009E02A /* ViewModel.swift */; };
+		4F034A582C4F4A600009E02A /* MealDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F034A572C4F4A5F0009E02A /* MealDetailsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		4F034A3E2C4F3A4D0009E02A /* Fetch-App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Fetch-App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		4F034A412C4F3A4D0009E02A /* Fetch_AppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fetch_AppApp.swift; sourceTree = "<group>"; };
+		4F034A412C4F3A4D0009E02A /* FetchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchApp.swift; sourceTree = "<group>"; };
 		4F034A432C4F3A4D0009E02A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		4F034A452C4F3A4E0009E02A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4F034A482C4F3A4E0009E02A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		4F034A502C4F3A950009E02A /* Meal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Meal.swift; sourceTree = "<group>"; };
+		4F034A532C4F3C650009E02A /* DataFetcherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataFetcherService.swift; sourceTree = "<group>"; };
+		4F034A552C4F3EC50009E02A /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
+		4F034A572C4F4A5F0009E02A /* MealDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealDetailsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,8 +59,12 @@
 		4F034A402C4F3A4D0009E02A /* Fetch-App */ = {
 			isa = PBXGroup;
 			children = (
-				4F034A412C4F3A4D0009E02A /* Fetch_AppApp.swift */,
+				4F034A412C4F3A4D0009E02A /* FetchApp.swift */,
+				4F034A552C4F3EC50009E02A /* ViewModel.swift */,
 				4F034A432C4F3A4D0009E02A /* ContentView.swift */,
+				4F034A5A2C4F4A940009E02A /* Views */,
+				4F034A522C4F3C110009E02A /* Services */,
+				4F034A4F2C4F3A890009E02A /* Models */,
 				4F034A452C4F3A4E0009E02A /* Assets.xcassets */,
 				4F034A472C4F3A4E0009E02A /* Preview Content */,
 			);
@@ -65,6 +77,30 @@
 				4F034A482C4F3A4E0009E02A /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		4F034A4F2C4F3A890009E02A /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				4F034A502C4F3A950009E02A /* Meal.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		4F034A522C4F3C110009E02A /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				4F034A532C4F3C650009E02A /* DataFetcherService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		4F034A5A2C4F4A940009E02A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				4F034A572C4F4A5F0009E02A /* MealDetailsView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,8 +173,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F034A562C4F3EC50009E02A /* ViewModel.swift in Sources */,
 				4F034A442C4F3A4D0009E02A /* ContentView.swift in Sources */,
-				4F034A422C4F3A4D0009E02A /* Fetch_AppApp.swift in Sources */,
+				4F034A582C4F4A600009E02A /* MealDetailsView.swift in Sources */,
+				4F034A542C4F3C650009E02A /* DataFetcherService.swift in Sources */,
+				4F034A512C4F3A950009E02A /* Meal.swift in Sources */,
+				4F034A422C4F3A4D0009E02A /* FetchApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -275,11 +315,12 @@
 				DEVELOPMENT_TEAM = KNMMQQRY56;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Fetch Meals App";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.food-and-drink";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -304,11 +345,12 @@
 				DEVELOPMENT_TEAM = KNMMQQRY56;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Fetch Meals App";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.food-and-drink";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
