@@ -10,7 +10,6 @@ import Foundation
 class ViewModel: ObservableObject {
     
     @Published var meals: [Meal] = []
-    @Published var selectedMeal: Meal?
     private let dataFetcher = DataFetcherService<[String: [Meal]]>()
     
     // MARK: SEARCH
@@ -23,7 +22,7 @@ class ViewModel: ObservableObject {
          }
      }
     
-    // MARK: LOADING FUNCTIONS()
+    // MARK: URL-FETCH FUNC()
     
     func loadMeals() async {
         guard let url = URL(string: "https://themealdb.com/api/json/v1/1/filter.php?c=Dessert") else { return }
@@ -39,17 +38,14 @@ class ViewModel: ObservableObject {
         }
     }
 
-    func loadMealDetails(id: String) async {
-        guard let url = URL(string: "https://themealdb.com/api/json/v1/1/lookup.php?i=\(id)") else { return }
+    func loadMealDetails(id: String) async -> Meal? {
+        guard let url = URL(string: "https://themealdb.com/api/json/v1/1/lookup.php?i=\(id)") else { return nil }
         do {
             let result = try await dataFetcher.fetchData(from: url)
-            DispatchQueue.main.async {
-                self.selectedMeal = result["meals"]?.first
-            }
+            return result["meals"]?.first
         } catch {
-            DispatchQueue.main.async {
-                print("Error loading meal details: \(error)")
-            }
+            print("Error loading meal details: \(error)")
+            return nil
         }
     }
 }
