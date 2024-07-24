@@ -41,8 +41,10 @@ class ViewModel: ObservableObject {
     func loadMealDetails(id: String) async {
         guard let url = URL(string: "https://themealdb.com/api/json/v1/1/lookup.php?i=\(id)") else { return }
         do {
-            let result = try await dataFetcher.fetchData(from: url)
-            if let detailedMeal = result["meals"]?.first {
+            let (data, _) = try await URLSession.shared.data(from: url)
+            let decoder = JSONDecoder()
+            let result = try decoder.decode([String: [Meal]].self, from: data)
+            if let detailedMeals = result["meals"], let detailedMeal = detailedMeals.first {
                 DispatchQueue.main.async {
                     // Update the meal in the meals array
                     if let index = self.meals.firstIndex(where: { $0.idMeal == id }) {
@@ -73,10 +75,5 @@ class ViewModel: ObservableObject {
         } catch {
             print("Error loading categories: \(error)")
         }
-    }
-
-    // Helper struct to decode the JSON response
-    struct CategoryResponse: Codable {
-        let categories: [Category]
     }
 }

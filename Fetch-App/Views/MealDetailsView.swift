@@ -13,19 +13,24 @@ struct MealDetailView: View {
 
     var body: some View {
         ScrollView(.vertical) {
-            if let meal = viewModel.selectedMeal, meal.isDetailsLoaded {
-                Text(meal.strMeal)
-                    .font(.title)
-                    .padding()
-                
-                instructionsView(meal: meal)
-                ingredientsView(meal: meal)
-                
-            } else {
-                ProgressView()
+            VStack {
+                if let meal = viewModel.selectedMeal, meal.isDetailsLoaded {
+                    
+                    meal.getFullImage()
+                    
+                    Text(meal.strMeal)
+                        .font(.title)
+                        .padding()
+                    
+                    instructionsView(meal: meal)
+                    ingredientsView(meal: meal)
+                    
+                } else {
+                    ProgressView()
+                }
             }
+            .padding()
         }
-        .padding()
         .onAppear {
             if let mealID = viewModel.selectedMeal?.idMeal, !viewModel.selectedMeal!.isDetailsLoaded {
                 Task { await viewModel.loadMealDetails(id: mealID) }
@@ -77,11 +82,13 @@ struct MealDetailView: View {
                 Text("Ingredients")
                     .font(.title3.bold())
                     .padding(.horizontal)
+                    .padding(.top)
+                
                 Spacer()
             }
             
-            ForEach(meal.ingredients ?? [], id: \.self) { ingredient in
-                Text(ingredient)
+            ForEach(meal.ingredients, id: \.self) { ingredient in
+                Text("\(ingredient.name): \(ingredient.measure)")
                     .padding(.horizontal)
                     .padding(.bottom, 2)
             }
