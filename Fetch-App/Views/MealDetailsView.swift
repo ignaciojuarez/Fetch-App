@@ -86,7 +86,6 @@ struct IngredientsView: View {
                 HStack {
                     ingredientImageView(for: ingredient.name)
                         .frame(width: 50, height: 50)
-                        .clipShape(Circle())
 
                     VStack(alignment: .leading) {
                         Text(ingredient.name)
@@ -113,11 +112,10 @@ struct IngredientsView: View {
             AsyncImage(url: url) { image in
                 image.resizable()
             } placeholder: {
-                ProgressView()
+                Image(systemName: "photo.on.rectangle")
             }
         } else {
             Image(systemName: "photo.on.rectangle")
-                .resizable()
         }
     }
 }
