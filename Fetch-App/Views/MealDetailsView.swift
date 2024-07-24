@@ -18,12 +18,15 @@ struct MealDetailView: View {
                     
                     meal.getFullImage()
                     
-                    Text(meal.strMeal)
-                        .font(.title)
-                        .padding()
+                    HStack {
+                        Text(meal.strMeal)
+                            .font(.title.bold())
+                            .padding()
+                        Spacer()
+                    }
                     
                     instructionsView(meal: meal)
-                    ingredientsView(meal: meal)
+                    IngredientsView(meal: meal)
                     
                 } else {
                     ProgressView()
@@ -39,7 +42,6 @@ struct MealDetailView: View {
     }
     
     // MARK: - Instructions View
-    @ViewBuilder
     private func instructionsView(meal: Meal) -> some View {
         VStack(alignment: .leading) {
             HStack {
@@ -73,25 +75,56 @@ struct MealDetailView: View {
             }
         }
     }
+}
 
-    // MARK: - Ingredients View
-    @ViewBuilder
-    private func ingredientsView(meal: Meal) -> some View {
+struct IngredientsView: View {
+    var meal: Meal
+
+    var body: some View {
         VStack(alignment: .leading) {
             HStack {
                 Text("Ingredients")
                     .font(.title3.bold())
-                    .padding(.horizontal)
-                    .padding(.top)
-                
+                    .padding()
+
                 Spacer()
             }
-            
+
             ForEach(meal.ingredients, id: \.self) { ingredient in
-                Text("\(ingredient.name): \(ingredient.measure)")
-                    .padding(.horizontal)
-                    .padding(.bottom, 2)
+                HStack {
+                    ingredientImageView(for: ingredient.name)
+                        .frame(width: 50, height: 50)
+                        .clipShape(Circle())
+
+                    VStack(alignment: .leading) {
+                        Text(ingredient.name)
+                        Text(ingredient.measure)
+                            .font(.caption)
+                            .foregroundColor(.gray)
+                    }
+                    
+                    Spacer()
+                }
+                .padding(.vertical, 6)
+                .padding(.horizontal)
             }
         }
     }
+
+    @ViewBuilder
+    private func ingredientImageView(for ingredient: String) -> some View {
+        let formattedName = ingredient.replacingOccurrences(of: " ", with: "-")
+        let urlString = "https://www.themealdb.com/images/ingredients/\(formattedName)-Small.png"
+        if let url = URL(string: urlString) {
+            AsyncImage(url: url) { image in
+                image.resizable()
+            } placeholder: {
+                ProgressView()
+            }
+        } else {
+            Image(systemName: "photo.on.rectangle")
+                .resizable()
+        }
+    }
 }
+
