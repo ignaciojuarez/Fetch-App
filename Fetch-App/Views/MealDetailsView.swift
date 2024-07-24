@@ -8,30 +8,45 @@
 import SwiftUI
 
 struct MealDetailView: View {
-    var mealID: String
-    @State private var selectedMeal: Meal?
     @EnvironmentObject var viewModel: ViewModel
-
+    
     var body: some View {
-        VStack {
-            if let meal = selectedMeal {
+        ScrollView(.vertical) {
+            if let meal = viewModel.selectedMeal, meal.isDetailsLoaded {
                 Text(meal.strMeal)
                     .font(.title)
-                
-                Text("Instructions: \(meal.strInstructions ?? "No instructions available.")")
                     .padding()
+                
+                HStack {
+                    Text("Instructions")
+                        .font(.title3.bold())
+                        .padding(.horizontal)
+                        .padding(.top)
+                    Spacer()
+                }
+                
+                Text(meal.strInstructions ?? "No instructions available.")
+                    .padding()
+                    .foregroundStyle(.opacity(0.8))
+                
+                HStack {
+                    Text("Ingredients")
+                        .font(.title3.bold())
+                        .padding(.horizontal)
+                    Spacer()
+                }
                 
                 List(meal.ingredients ?? [], id: \.self) { ingredient in
                     Text(ingredient)
                 }
             } else {
-                Text("Loading meal details...")
+                ProgressView()
             }
         }
-        .navigationTitle("Meal Details")
+        .padding()
         .onAppear {
-            Task {
-                selectedMeal = await viewModel.loadMealDetails(id: mealID)
+            if let mealID = viewModel.selectedMeal?.idMeal, !viewModel.selectedMeal!.isDetailsLoaded {
+                Task { await viewModel.loadMealDetails(id: mealID) }
             }
         }
     }

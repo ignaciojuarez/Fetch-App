@@ -15,6 +15,7 @@
 		4F034A542C4F3C650009E02A /* DataFetcherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F034A532C4F3C650009E02A /* DataFetcherService.swift */; };
 		4F034A562C4F3EC50009E02A /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F034A552C4F3EC50009E02A /* ViewModel.swift */; };
 		4F034A582C4F4A600009E02A /* MealDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F034A572C4F4A5F0009E02A /* MealDetailsView.swift */; };
+		4F034A5C2C4F58780009E02A /* UserDefaultsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F034A5B2C4F58780009E02A /* UserDefaultsService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +28,7 @@
 		4F034A532C4F3C650009E02A /* DataFetcherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataFetcherService.swift; sourceTree = "<group>"; };
 		4F034A552C4F3EC50009E02A /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		4F034A572C4F4A5F0009E02A /* MealDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealDetailsView.swift; sourceTree = "<group>"; };
+		4F034A5B2C4F58780009E02A /* UserDefaultsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +93,7 @@
 			isa = PBXGroup;
 			children = (
 				4F034A532C4F3C650009E02A /* DataFetcherService.swift */,
+				4F034A5B2C4F58780009E02A /* UserDefaultsService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -178,6 +181,7 @@
 				4F034A582C4F4A600009E02A /* MealDetailsView.swift in Sources */,
 				4F034A542C4F3C650009E02A /* DataFetcherService.swift in Sources */,
 				4F034A512C4F3A950009E02A /* Meal.swift in Sources */,
+				4F034A5C2C4F58780009E02A /* UserDefaultsService.swift in Sources */,
 				4F034A422C4F3A4D0009E02A /* FetchApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

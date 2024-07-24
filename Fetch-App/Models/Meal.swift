@@ -11,7 +11,8 @@ struct Meal: Identifiable, Hashable, Codable {
     var id: String { idMeal }
     let idMeal: String
     let strMeal: String
-    let strMealThumb: URL
+    let strMealThumb: String?
     var strInstructions: String?
     var ingredients: [String]?
+    var isDetailsLoaded: Bool { strInstructions != nil }
 }
