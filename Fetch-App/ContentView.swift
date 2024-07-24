@@ -18,7 +18,7 @@ import SwiftUI
 
 // EXTRAS:
 // - Images load as extension of Meal Model. And use /preview if available, or fallback on normal image (when needed)
-// - Categories ScrollView with selection
+// - Categories scrollView to select type recepies to load
 // - Custom Search bar for Meals
 // - Custom Hex Color Extension
 // - Ingredient Images and Quantity
@@ -31,26 +31,10 @@ struct ContentView: View {
     var body: some View {
         ScrollView {
             VStack {
-                header
+                headerView
                 customSearchBar
                 categoryScrollView
-                
-                HStack {
-                    Text("Recepies")
-                        .font(.title3.bold())
-                    Spacer()
-                }
-                .padding(.horizontal)
-                
-                LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 20) {
-                    ForEach(viewModel.filteredMeals, id: \.idMeal) { meal in
-                        Button {
-                            viewModel.selectedMeal = meal
-                        } label: {
-                            MealPreviewView(meal: meal)
-                        }
-                    }
-                }
+                recepiesView
             }
             .padding()
         }
@@ -60,17 +44,13 @@ struct ContentView: View {
         .onAppear {
             Task {
                 await viewModel.loadCategories()
-                // Set 'Desserts' as the default category
-                if let dessertsCategory = viewModel.categories.first(where: { $0.strCategory == "Dessert" }) {
-                    viewModel.selectedCategory = dessertsCategory
-                    await viewModel.loadMeals(category: dessertsCategory.strCategory)
-                }
+                await viewModel.setDefaultCategory()
             }
         }
         .background(Color.init(hex: "F0F0F0"))
     }
     
-    private var header: some View {
+    private var headerView: some View {
         HStack {
             VStack(alignment: .leading) {
                 Text("Hello, Fetch")
@@ -129,36 +109,42 @@ struct ContentView: View {
                 Spacer()
             }
             .padding(.horizontal)
-            
+
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 10) {
                     ForEach(viewModel.categories, id: \.id) { category in
-                        VStack {
-                            AsyncImage(url: URL(string: category.strCategoryThumb)) { image in
-                                image
-                                    .resizable()
-                                    .scaledToFit()
-                            } placeholder: {
-                                ProgressView()
+                        CategoryItemView(category: category, selectedCategory: $viewModel.selectedCategory)
+                            .onTapGesture {
+                                viewModel.selectedCategory = category
+                                Task {
+                                    await viewModel.loadMeals(category: category.strCategory)
+                                }
                             }
-                            .frame(width: 55)
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
-                            
-                            Text(category.strCategory)
-                                .font(.caption.bold())
-                                .foregroundStyle(viewModel.selectedCategory == category ? Color.white : Color.black.opacity(0.8))
-                        }
-                        .frame(width: 80, height: 80)
-                        .background(viewModel.selectedCategory == category ? Color.init(hex: "F8A91B") : Color.white)
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                        .onTapGesture {
-                            viewModel.selectedCategory = category
-                            Task { await viewModel.loadMeals(category: category.strCategory) }
-                        }
                     }
                 }
                 .padding(.horizontal)
                 .padding(.bottom)
+            }
+        }
+    }
+    
+    private var recepiesView: some View {
+        Group {
+            HStack {
+                Text("Recepies")
+                    .font(.title3.bold())
+                Spacer()
+            }
+            .padding(.horizontal)
+            
+            LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 20) {
+                ForEach(viewModel.filteredMeals, id: \.idMeal) { meal in
+                    Button {
+                        viewModel.selectedMeal = meal
+                    } label: {
+                        MealPreviewView(meal: meal)
+                    }
+                }
             }
         }
     }

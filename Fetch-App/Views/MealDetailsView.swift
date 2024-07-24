@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+/// A view displaying  detailed information about a selected meal
+/// meal's image, name, ingredients, and cooking instructions
 struct MealDetailView: View {
     @EnvironmentObject var viewModel: ViewModel
     @State private var showFullInstructions = false
@@ -17,14 +19,15 @@ struct MealDetailView: View {
                 if let meal = viewModel.selectedMeal, meal.isDetailsLoaded {
                     
                     meal.getFullImage()
+                        .padding()
                     
                     HStack {
                         Text(meal.strMeal)
                             .font(.title.bold())
-                            .padding(.top)
-                            .padding(.horizontal)
                         Spacer()
                     }
+                    .padding(.top)
+                    .padding(.horizontal)
                     
                     instructionsView(meal: meal)
                     IngredientsView(meal: meal)
@@ -36,48 +39,37 @@ struct MealDetailView: View {
             .padding()
         }
         .onAppear {
+            // Load meal details
             if let mealID = viewModel.selectedMeal?.idMeal, !viewModel.selectedMeal!.isDetailsLoaded {
                 Task { await viewModel.loadMealDetails(id: mealID) }
             }
         }
     }
     
-    // MARK: - Instructions View
+    /// View for displaying the cooking instructions of the meal
+    /// Has a button to show more or less of the instructions
     private func instructionsView(meal: Meal) -> some View {
         VStack(alignment: .leading) {
-//            HStack {
-//                Text("Instructions")
-//                    .font(.title3.bold())
-//                    .padding(.horizontal)
-//                    .padding(.top)
-//                Spacer()
-//            }
-
             if showFullInstructions {
                 Text(meal.strInstructions ?? "No instructions available.")
                     .lineLimit(nil)
-                    .padding()
                 Button("Show Less") {
-                    withAnimation {
-                        showFullInstructions.toggle()
-                    }
+                    withAnimation { showFullInstructions.toggle() }
                 }
-                .padding(.horizontal)
             } else {
                 Text(meal.strInstructions ?? "No instructions available.")
                     .lineLimit(9)
-                    .padding()
                 Button("Show More") {
-                    withAnimation {
-                        showFullInstructions.toggle()
-                    }
+                    withAnimation { showFullInstructions.toggle() }
                 }
-                .padding(.horizontal)
             }
         }
+        .padding()
     }
 }
 
+/// Ingredients section of the meal details view
+/// Displays each ingredient as an image alongside its name and quantity
 struct IngredientsView: View {
     var meal: Meal
 
@@ -86,10 +78,9 @@ struct IngredientsView: View {
             HStack {
                 Text("Ingredients")
                     .font(.title3.bold())
-                    .padding()
-
                 Spacer()
             }
+            .padding(.vertical)
 
             ForEach(meal.ingredients, id: \.self) { ingredient in
                 HStack {
@@ -107,11 +98,13 @@ struct IngredientsView: View {
                     Spacer()
                 }
                 .padding(.vertical, 6)
-                .padding(.horizontal)
             }
         }
+        .padding()
     }
 
+    /// Fetches and displays an image for the given ingredient
+    /// Falls back to a generic placeholder if the image cannot be loaded
     @ViewBuilder
     private func ingredientImageView(for ingredient: String) -> some View {
         let formattedName = ingredient.replacingOccurrences(of: " ", with: "-")

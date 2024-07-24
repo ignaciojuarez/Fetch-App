@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		26EA9BC62C516CBC00797E9C /* CategoryItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26EA9BC52C516CBC00797E9C /* CategoryItemView.swift */; };
 		4F034A422C4F3A4D0009E02A /* FetchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F034A412C4F3A4D0009E02A /* FetchApp.swift */; };
 		4F034A442C4F3A4D0009E02A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F034A432C4F3A4D0009E02A /* ContentView.swift */; };
 		4F034A462C4F3A4E0009E02A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F034A452C4F3A4E0009E02A /* Assets.xcassets */; };
@@ -23,6 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		26EA9BC52C516CBC00797E9C /* CategoryItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryItemView.swift; sourceTree = "<group>"; };
 		4F034A3E2C4F3A4D0009E02A /* Fetch-App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Fetch-App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F034A412C4F3A4D0009E02A /* FetchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchApp.swift; sourceTree = "<group>"; };
 		4F034A432C4F3A4D0009E02A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -112,6 +114,7 @@
 			isa = PBXGroup;
 			children = (
 				4FC938B02C50937900D98D6B /* MealPreviewView.swift */,
+				26EA9BC52C516CBC00797E9C /* CategoryItemView.swift */,
 				4F034A572C4F4A5F0009E02A /* MealDetailsView.swift */,
 				4F376E7C2C50A81E001C5CD5 /* MealImageLoader.swift */,
 			);
@@ -205,6 +208,7 @@
 				4F034A512C4F3A950009E02A /* Meal.swift in Sources */,
 				4FC938B12C50937900D98D6B /* MealPreviewView.swift in Sources */,
 				4F034A5C2C4F58780009E02A /* UserDefaultsService.swift in Sources */,
+				26EA9BC62C516CBC00797E9C /* CategoryItemView.swift in Sources */,
 				4F034A422C4F3A4D0009E02A /* FetchApp.swift in Sources */,
 				4F376E7F2C50AAD7001C5CD5 /* Category.swift in Sources */,
 			);
