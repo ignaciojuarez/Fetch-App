@@ -8,10 +8,9 @@
 import Foundation
 
 struct Category: Identifiable, Codable, Hashable {
+    var id: String { idCategory }
     let idCategory: String
     let strCategory: String
     let strCategoryThumb: String
     let strCategoryDescription: String
-    
-    var id: String { idCategory }
 }

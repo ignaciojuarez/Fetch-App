@@ -24,12 +24,16 @@ class ViewModel: ObservableObject {
     
     // MARK: URL-FETCH FUNC()
     
-    func loadMeals() async {
-        guard let url = URL(string: "https://themealdb.com/api/json/v1/1/filter.php?c=Dessert") else { return }
+    func loadMeals(category: String) async {
+        guard let url = URL(string: "https://themealdb.com/api/json/v1/1/filter.php?c=\(category)") else { return }
         do {
-            let result = try await dataFetcher.fetchData(from: url)
-            DispatchQueue.main.async {
-                self.meals = result["meals"] ?? []
+            let (data, _) = try await URLSession.shared.data(from: url)
+            let decoder = JSONDecoder()
+            let result = try decoder.decode([String: [Meal]].self, from: data)
+            if let fetchedMeals = result["meals"] {
+                DispatchQueue.main.async {
+                    self.meals = fetchedMeals
+                }
             }
         } catch {
             DispatchQueue.main.async {

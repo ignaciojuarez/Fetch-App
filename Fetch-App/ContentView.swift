@@ -60,7 +60,11 @@ struct ContentView: View {
         .onAppear {
             Task {
                 await viewModel.loadCategories()
-                await viewModel.loadMeals()
+                // Set 'Desserts' as the default category
+                if let dessertsCategory = viewModel.categories.first(where: { $0.strCategory == "Dessert" }) {
+                    viewModel.selectedCategory = dessertsCategory
+                    await viewModel.loadMeals(category: dessertsCategory.strCategory)
+                }
             }
         }
         .background(Color.init(hex: "F0F0F0"))
@@ -134,7 +138,6 @@ struct ContentView: View {
                                 image
                                     .resizable()
                                     .scaledToFit()
-                                
                             } placeholder: {
                                 ProgressView()
                             }
@@ -150,6 +153,7 @@ struct ContentView: View {
                         .clipShape(RoundedRectangle(cornerRadius: 10))
                         .onTapGesture {
                             viewModel.selectedCategory = category
+                            Task { await viewModel.loadMeals(category: category.strCategory) }
                         }
                     }
                 }
