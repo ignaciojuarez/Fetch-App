@@ -11,7 +11,6 @@ import SwiftUI
 // - LazyLoading
 // - favorites
 // - animations
-// - better design
 // - cache
 
 // DONE:
@@ -24,6 +23,7 @@ import SwiftUI
 // - Categories ScrollView with selection
 // - Custom Search bar for Meals
 // - Custom Hex Color Extension
+// - Ingredient Images and Quantity
 
 
 struct ContentView: View {

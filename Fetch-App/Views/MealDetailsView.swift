@@ -21,7 +21,8 @@ struct MealDetailView: View {
                     HStack {
                         Text(meal.strMeal)
                             .font(.title.bold())
-                            .padding()
+                            .padding(.top)
+                            .padding(.horizontal)
                         Spacer()
                     }
                     
@@ -44,13 +45,13 @@ struct MealDetailView: View {
     // MARK: - Instructions View
     private func instructionsView(meal: Meal) -> some View {
         VStack(alignment: .leading) {
-            HStack {
-                Text("Instructions")
-                    .font(.title3.bold())
-                    .padding(.horizontal)
-                    .padding(.top)
-                Spacer()
-            }
+//            HStack {
+//                Text("Instructions")
+//                    .font(.title3.bold())
+//                    .padding(.horizontal)
+//                    .padding(.top)
+//                Spacer()
+//            }
 
             if showFullInstructions {
                 Text(meal.strInstructions ?? "No instructions available.")
