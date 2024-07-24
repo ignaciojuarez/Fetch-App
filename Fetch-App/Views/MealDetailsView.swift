@@ -47,7 +47,7 @@ struct MealDetailView: View {
 
             if showFullInstructions {
                 Text(meal.strInstructions ?? "No instructions available.")
-                    .lineLimit(nil) // Removes line limit when showing full text
+                    .lineLimit(nil)
                     .padding()
                 Button("Show Less") {
                     withAnimation {
@@ -57,7 +57,7 @@ struct MealDetailView: View {
                 .padding(.horizontal)
             } else {
                 Text(meal.strInstructions ?? "No instructions available.")
-                    .lineLimit(9) // Limit to 9 lines initially
+                    .lineLimit(9)
                     .padding()
                 Button("Show More") {
                     withAnimation {

@@ -20,8 +20,9 @@ import SwiftUI
 // - Meal Detail View as .sheet (SwiftUI)
 
 // EXTRAS:
-// - Meal Images using /preview
-// - Custom Search bar for  Meals
+// - Images load as extension of Meal Model. And use /preview if available, or fallback on normal image (when needed)
+// - Categories ScrollView with selection
+// - Custom Search bar for Meals
 // - Custom Hex Color Extension
 
 
@@ -33,6 +34,14 @@ struct ContentView: View {
             VStack {
                 header
                 customSearchBar
+                categoryScrollView
+                
+                HStack {
+                    Text("Recepies")
+                        .font(.title3.bold())
+                    Spacer()
+                }
+                .padding(.horizontal)
                 
                 LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 20) {
                     ForEach(viewModel.filteredMeals, id: \.idMeal) { meal in
@@ -50,7 +59,10 @@ struct ContentView: View {
             MealDetailView()
         }
         .onAppear {
-            Task { await viewModel.loadMeals() }
+            Task {
+                await viewModel.loadCategories()
+                await viewModel.loadMeals()
+            }
         }
         .background(Color.init(hex: "F0F0F0"))
     }
@@ -83,7 +95,7 @@ struct ContentView: View {
                 .padding(12)
                 .padding(.horizontal, 30)
                 .background(Color(.white))
-                .cornerRadius(20)
+                .cornerRadius(18)
                 .overlay {
                     HStack {
                         Image(systemName: "magnifyingglass")
@@ -105,7 +117,50 @@ struct ContentView: View {
         }
         .padding()
     }
+    
+    private var categoryScrollView: some View {
+        Group {
+            HStack {
+                Text("Categories")
+                    .font(.title3.bold())
+                Spacer()
+            }
+            .padding(.horizontal)
+            
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 10) {
+                    ForEach(viewModel.categories, id: \.id) { category in
+                        VStack {
+                            AsyncImage(url: URL(string: category.strCategoryThumb)) { image in
+                                image
+                                    .resizable()
+                                    .scaledToFit()
+                                
+                            } placeholder: {
+                                ProgressView()
+                            }
+                            .frame(width: 55)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                            
+                            Text(category.strCategory)
+                                .font(.caption.bold())
+                                .foregroundStyle(viewModel.selectedCategory == category ? Color.white : Color.black.opacity(0.8))
+                        }
+                        .frame(width: 80, height: 80)
+                        .background(viewModel.selectedCategory == category ? Color.init(hex: "F8A91B") : Color.white)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                        .onTapGesture {
+                            viewModel.selectedCategory = category
+                        }
+                    }
+                }
+                .padding(.horizontal)
+                .padding(.bottom)
+            }
+        }
+    }
 }
+
 #Preview {
     ContentView()
         .environmentObject(ViewModel())

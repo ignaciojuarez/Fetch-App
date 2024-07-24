@@ -11,16 +11,15 @@ class ViewModel: ObservableObject {
     
     @Published var meals: [Meal] = []
     @Published var selectedMeal: Meal?
+    @Published var categories: [Category] = []
+    @Published var selectedCategory: Category?
     private let dataFetcher = DataFetcherService<[String: [Meal]]>()
     
     // MARK: SEARCH
     @Published var searchText = ""
     var filteredMeals: [Meal] {
-         if searchText.isEmpty {
-             return meals
-         } else {
-             return meals.filter { $0.strMeal.lowercased().contains(searchText.lowercased()) }
-         }
+        if searchText.isEmpty { return meals }
+        else { return meals.filter { $0.strMeal.lowercased().contains(searchText.lowercased()) } }
      }
     
     // MARK: URL-FETCH FUNC()
@@ -58,5 +57,26 @@ class ViewModel: ObservableObject {
                 print("Error loading meal details: \(error)")
             }
         }
+    }
+    
+    func loadCategories() async {
+        guard let url = URL(string: "https://www.themealdb.com/api/json/v1/1/categories.php") else { return }
+        do {
+            let (data, _) = try await URLSession.shared.data(from: url)
+            let decoder = JSONDecoder()
+            let decodedData = try decoder.decode([String: [Category]].self, from: data)
+            if let categories = decodedData["categories"] {
+                DispatchQueue.main.async {
+                    self.categories = categories
+                }
+            }
+        } catch {
+            print("Error loading categories: \(error)")
+        }
+    }
+
+    // Helper struct to decode the JSON response
+    struct CategoryResponse: Codable {
+        let categories: [Category]
     }
 }
