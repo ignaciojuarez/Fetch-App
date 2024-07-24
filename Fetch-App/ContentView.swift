@@ -15,57 +15,97 @@ import SwiftUI
 // - cache
 
 // DONE:
-// - async fetching
-// - search
-// - images
+// - Async Genetic Type URL Data Fetcher Class
+// - Display a List of Desserts (SwiftUI)
+// - Meal Detail View as .sheet (SwiftUI)
+
+// EXTRAS:
+// - Meal Images using /preview
+// - Custom Search bar for  Meals
+// - Custom Hex Color Extension
+
 
 struct ContentView: View {
     @EnvironmentObject var viewModel: ViewModel
 
     var body: some View {
-        NavigationView {
-            List(viewModel.filteredMeals, id: \.idMeal) { meal in
-                Button {
-                    viewModel.selectedMeal = meal
-                } label: {
-                    HStack {
-                        mealImageView(meal: meal)
-                        Text(meal.strMeal)
-                            .foregroundStyle(.black)
+        ScrollView {
+            VStack {
+                header
+                customSearchBar
+                
+                LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 20) {
+                    ForEach(viewModel.filteredMeals, id: \.idMeal) { meal in
+                        Button {
+                            viewModel.selectedMeal = meal
+                        } label: {
+                            MealPreviewView(meal: meal)
+                        }
                     }
                 }
             }
+            .padding()
         }
-        .navigationTitle("Desserts")
-        .searchable(text: $viewModel.searchText, prompt: "Search desserts")
-        .sheet(item: $viewModel.selectedMeal) { meal in
+        .sheet(item: $viewModel.selectedMeal) { _ in
             MealDetailView()
         }
         .onAppear {
             Task { await viewModel.loadMeals() }
         }
+        .background(Color.init(hex: "F0F0F0"))
     }
     
-    @ViewBuilder
-    private func mealImageView(meal: Meal) -> some View {
-        Group {
-            if let imageUrl = meal.strMealThumb, let url = URL(string: imageUrl + "/preview") {
-                AsyncImage(url: url) { image in
-                    image.resizable()
-                } placeholder: {
-                    ProgressView()
-                }
-            } else {
-                Image(systemName: "photo")
+    private var header: some View {
+        HStack {
+            VStack(alignment: .leading) {
+                Text("Hello, Fetch")
+                    .font(.callout.bold())
+                    .foregroundStyle(.opacity(0.5))
+                
+                Text("What would you like to cook today?")
+                    .font(.title2.bold())
+            }
+            Spacer()
+            VStack() {
+                Image("icon")
                     .resizable()
+                    .scaledToFit()
+                    .frame(width: 38, height: 38)
+                    .cornerRadius(100)
             }
         }
-        .foregroundColor(.gray)
-        .frame(width: 60, height: 60)
-        .clipShape(RoundedRectangle(cornerRadius: 10))
+        .padding(.horizontal)
+    }
+
+    private var customSearchBar: some View {
+        HStack {
+            TextField("Search desserts", text: $viewModel.searchText)
+                .padding(12)
+                .padding(.horizontal, 30)
+                .background(Color(.white))
+                .cornerRadius(20)
+                .overlay {
+                    HStack {
+                        Image(systemName: "magnifyingglass")
+                            .foregroundColor(.gray)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.leading, 14)
+                        
+                        if !viewModel.searchText.isEmpty {
+                            Button {
+                                viewModel.searchText = ""
+                            } label: {
+                                Image(systemName: "multiply.circle.fill")
+                                    .foregroundColor(Color.init(hex: "777777"))
+                                    .padding(.trailing, 14)
+                            }
+                        }
+                    }
+                }
+        }
+        .padding()
     }
 }
-
 #Preview {
     ContentView()
         .environmentObject(ViewModel())

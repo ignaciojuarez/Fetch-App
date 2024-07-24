@@ -9,7 +9,8 @@ import SwiftUI
 
 struct MealDetailView: View {
     @EnvironmentObject var viewModel: ViewModel
-    
+    @State private var showFullInstructions = false
+
     var body: some View {
         ScrollView(.vertical) {
             if let meal = viewModel.selectedMeal, meal.isDetailsLoaded {
@@ -17,28 +18,9 @@ struct MealDetailView: View {
                     .font(.title)
                     .padding()
                 
-                HStack {
-                    Text("Instructions")
-                        .font(.title3.bold())
-                        .padding(.horizontal)
-                        .padding(.top)
-                    Spacer()
-                }
+                instructionsView(meal: meal)
+                ingredientsView(meal: meal)
                 
-                Text(meal.strInstructions ?? "No instructions available.")
-                    .padding()
-                    .foregroundStyle(.opacity(0.8))
-                
-                HStack {
-                    Text("Ingredients")
-                        .font(.title3.bold())
-                        .padding(.horizontal)
-                    Spacer()
-                }
-                
-                List(meal.ingredients ?? [], id: \.self) { ingredient in
-                    Text(ingredient)
-                }
             } else {
                 ProgressView()
             }
@@ -47,6 +29,61 @@ struct MealDetailView: View {
         .onAppear {
             if let mealID = viewModel.selectedMeal?.idMeal, !viewModel.selectedMeal!.isDetailsLoaded {
                 Task { await viewModel.loadMealDetails(id: mealID) }
+            }
+        }
+    }
+    
+    // MARK: - Instructions View
+    @ViewBuilder
+    private func instructionsView(meal: Meal) -> some View {
+        VStack(alignment: .leading) {
+            HStack {
+                Text("Instructions")
+                    .font(.title3.bold())
+                    .padding(.horizontal)
+                    .padding(.top)
+                Spacer()
+            }
+
+            if showFullInstructions {
+                Text(meal.strInstructions ?? "No instructions available.")
+                    .lineLimit(nil) // Removes line limit when showing full text
+                    .padding()
+                Button("Show Less") {
+                    withAnimation {
+                        showFullInstructions.toggle()
+                    }
+                }
+                .padding(.horizontal)
+            } else {
+                Text(meal.strInstructions ?? "No instructions available.")
+                    .lineLimit(9) // Limit to 9 lines initially
+                    .padding()
+                Button("Show More") {
+                    withAnimation {
+                        showFullInstructions.toggle()
+                    }
+                }
+                .padding(.horizontal)
+            }
+        }
+    }
+
+    // MARK: - Ingredients View
+    @ViewBuilder
+    private func ingredientsView(meal: Meal) -> some View {
+        VStack(alignment: .leading) {
+            HStack {
+                Text("Ingredients")
+                    .font(.title3.bold())
+                    .padding(.horizontal)
+                Spacer()
+            }
+            
+            ForEach(meal.ingredients ?? [], id: \.self) { ingredient in
+                Text(ingredient)
+                    .padding(.horizontal)
+                    .padding(.bottom, 2)
             }
         }
     }
