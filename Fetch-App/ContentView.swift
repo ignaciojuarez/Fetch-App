@@ -8,9 +8,7 @@
 import SwiftUI
 
 // TODO:
-// - LazyLoading
 // - favorites
-// - animations
 // - cache
 
 // DONE:
@@ -24,6 +22,7 @@ import SwiftUI
 // - Custom Search bar for Meals
 // - Custom Hex Color Extension
 // - Ingredient Images and Quantity
+// - LazyLoading
 
 
 struct ContentView: View {
