@@ -7,24 +7,6 @@
 
 import SwiftUI
 
-// TODO:
-// - favorites
-// - cache
-
-// DONE:
-// - Async Genetic Type URL Data Fetcher Class
-// - Display a List of Desserts (SwiftUI)
-// - Meal Detail View as .sheet (SwiftUI)
-
-// EXTRAS:
-// - Images load as extension of Meal Model. And use /preview if available, or fallback on normal image (when needed)
-// - Categories scrollView to select type recepies to load
-// - Custom Search bar for Meals
-// - Custom Hex Color Extension
-// - Ingredient Images and Quantity
-// - LazyLoading
-
-
 struct ContentView: View {
     @EnvironmentObject var viewModel: ViewModel
 
