@@ -56,7 +56,7 @@ struct ContentView: View {
 
     private var customSearchBar: some View {
         HStack {
-            TextField("Search desserts", text: $viewModel.searchText)
+            TextField("Search Recipes", text: $viewModel.searchText)
                 .padding(12)
                 .padding(.horizontal, 30)
                 .background(Color(.white))
@@ -113,7 +113,7 @@ struct ContentView: View {
     private var recepiesView: some View {
         Group {
             HStack {
-                Text("Recepies")
+                Text("Recipes")
                     .font(.title3.bold())
                 Spacer()
             }
